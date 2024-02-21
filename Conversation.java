@@ -14,7 +14,6 @@ public class Conversation {
         "Please go on.",
         "I'd like to hear more about that."
     };
-
     public static final String[] mirrorWords = {"I", "me", "am", "you", "my", "your","I'm","you're"};
 
     public static void main(String[] args) {
@@ -30,15 +29,15 @@ public class Conversation {
         System.out.println("Nice to meet you, " + name + "!");
 
         StringBuilder transcript = new StringBuilder();
-
         for (int round = 1; round <= rounds; round++) {
             String userInput = scanner.nextLine();
             transcript.append(name).append(": ").append(userInput).append("\n");
 
             String response;
             if (containsMirrorWords(userInput)) {
-                response = mirrorInput(userInput);
-            } else {
+                response = mirrorWord(userInput);
+            }
+            else {
                 response = cannedResponses[random.nextInt(cannedResponses.length)];
             }
 
@@ -63,44 +62,64 @@ public class Conversation {
         return false;
     }
 
-    private static String mirrorInput(String input) {
-        String[] words = input.split("\\s+");
-        StringBuilder mirroredResponse = new StringBuilder();
-        for (String word : words) {
-            if(containsMirrorWords(input)){
-                mirroredResponse.append(mirrorWord(word)).append(" ").append(word);
-            }
-
-        else{
-            mirroredResponse.append(word);
-            }
-        }
-        return mirroredResponse.toString().trim();
-        
-    }
-    
-
     private static String mirrorWord (String input) {
-        switch (input.toLowerCase()) {
-            case "i":
-                return "you";
-            case "me":
-                return "you";
-            case "am":
-                return "are";
-            case "you":
-                return "I";
-            case "my":
-                return "your";
-            case "your":
-                return "my";
-            case "i'm":
-                return "you're";
-            case "you're":
-                return "I'm";
-            default:
-                Random random = new Random();
-                return cannedResponses[random.nextInt(cannedResponses.length)];
+        String[] words = input.split("\\s+");
+        Random random = new Random();
+        // Mirroring words
+        for (int i = 0; i < words.length; i++) {
+            switch (words[i]) {
+                case "I":
+                    words[i] = "you";
+                    break;
+                case "me":
+                    words[i] = "you";
+                    break;
+                case "am":
+                    words[i] = "are";
+                    break;
+                case "you":
+                    words[i] = "I";
+                    break;
+                case "my":
+                    words[i] = "your";
+                     break;
+                case "your":
+                    words[i] = "my";
+                    break;
+                case "You're":
+                    words[i] = "I'm";
+                    break;
+                case "I'm":
+                    words[i] = "you're";
+                    break;
+                case "are":
+                    words[i] = "am";
+                    break;
+                case "you're":
+                    words[i] = "I'm";      
+                    break;
+                case "you?":
+                    words[i]="I?";
+                    break;
+                case "me?":
+                    words[i]="you?";
+                    break;
+                case "I?":
+                    words[i]="you?";
+                    break;
+                case "myself":
+                    words[i]="yourself";
+                    break;
+            }
         }
+        // Formulating response
+        String response;
+        if (words.length > 0 && words[words.length - 1].endsWith("?")) {
+            response = cannedResponses[random.nextInt(cannedResponses.length)];;
+        } else {
+            response = cannedResponses[random.nextInt(cannedResponses.length)];
+        }
+
+        return String.join(" ", words) + "? " + response;
     }
 }
