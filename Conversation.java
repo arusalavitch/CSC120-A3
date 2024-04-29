@@ -1,21 +1,32 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * A simple program simulating a conversation between the user and the program.
+ */
 public class Conversation {
+
+    // Canned responses for the program
     private static final String[] cannedResponses = {
-        "Interesting, tell me more.",
-        "I see. Please continue.",
-        "That's fascinating!",
-        "Could you elaborate on that?",
-        "I'm not sure I understand. Can you explain further?",
-        "Tell me something else.",
-        "How do you feel about that?",
-        "That's quite intriguing!",
-        "Please go on.",
-        "I'd like to hear more about that."
+            "Interesting, tell me more.",
+            "I see. Please continue.",
+            "That's fascinating!",
+            "Could you elaborate on that?",
+            "I'm not sure I understand. Can you explain further?",
+            "Tell me something else.",
+            "How do you feel about that?",
+            "That's quite intriguing!",
+            "Please go on.",
+            "I'd like to hear more about that."
     };
+
+    // Mirror words used for transforming user input
     public static final String[] mirrorWords = {"I", "me", "am", "you", "my", "your","I'm","you're"};
 
+    /**
+     * Main method to run the conversation program.
+     * @param args Command-line arguments (unused)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
@@ -52,6 +63,11 @@ public class Conversation {
         scanner.close();
     }
 
+    /**
+     * Checks if the user input contains mirror words.
+     * @param input The user input to check
+     * @return true if the input contains mirror words, false otherwise
+     */
     private static boolean containsMirrorWords(String input) {
         input = input.toLowerCase();
         for (String word : mirrorWords) {
@@ -62,6 +78,11 @@ public class Conversation {
         return false;
     }
 
+    /**
+     * Transforms the user input by replacing mirror words and formulating a response.
+     * @param input The user input to transform
+     * @return The transformed input with a response
+     */
     private static String mirrorWord (String input) {
         String[] words = input.split("\\s+");
         Random random = new Random();
@@ -82,7 +103,7 @@ public class Conversation {
                     break;
                 case "my":
                     words[i] = "your";
-                     break;
+                    break;
                 case "your":
                     words[i] = "my";
                     break;
@@ -96,7 +117,7 @@ public class Conversation {
                     words[i] = "am";
                     break;
                 case "you're":
-                    words[i] = "I'm";      
+                    words[i] = "I'm";
                     break;
                 case "you?":
                     words[i]="I?";
